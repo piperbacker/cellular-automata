@@ -1,0 +1,63 @@
+.Header {
+    margin: 1%;
+    color: red;
+    outline: 5px solid black;
+}
+
+.Body {}
+
+.Build {
+    display: inline-block;
+    vertical-align: top;
+    width: 20%;
+    margin: 1%;
+    padding-left: 1%;
+    outline: 5px solid black;
+}
+
+.build-automata-form {}
+
+.select-cols-rows {
+    margin: 10px;
+}
+
+.init-mode-radio {}
+
+.Display {
+    display: inline-block;
+    vertical-align: top;
+    height: 600px;
+    width: 72%;
+    margin: 1%;
+    padding: 1%;
+    position: relative;
+    outline: 5px solid black;
+}
+
+#build-canvas {
+    outline: 5px solid red;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.automaton-visualizer {
+    margin: 1%;
+    outline: 5px solid black;
+
+}
+
+#visualizer-form {
+    display: inline-block;
+    
+}
+
+#visual-canvas {
+    display: inline-block;
+    outline: 5px solid red;
+    margin: 1%;
+}

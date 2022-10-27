@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Local Solver</title>
+</head>
+
+<body>
+    <div>
+        <div class="Header">
+            <h1>Cellular Automata</h1>
+        </div>
+        <div class="Body">
+            <div class="Build">
+                <form class="build-automata-form" id="build-form">
+                    <h2>Build Automata</h2>
+                    <div class="select-cols-rows">
+                        <label for="num-gens-input">Number of Generations (rows): </label>
+                        <input id="num-gens-input" name="num-gens" type="text" placeholder="[1-255]" minlength="1"
+                            maxlength="3">
+                        <br>
+                        <label for="gen-size-input">Size of each Generation (columns): </label>
+                        <input id="gen-size-input" name="gen-size" type="text" placeholder="[3-255]" minlength="1"
+                            maxlength="3">
+                    </div>
+                    <h3>Intialize Generation</h3>
+                    <div class="init-mode-radio">
+                        <input type="radio" id="first-state" name="init-mode" value="true" checked>
+                        <label for="first-state">First cell in generation has ON state</label><br>
+                        <input type="radio" id="random-state" name="init-mode" value="false">
+                        <label for="random-state">Each cell in generation has random state</label><br>
+                    </div>
+                    <h3>Manage Line Edges</h3>
+                    <div class="eol-mode-radio">
+                        <input type="radio" id="toric" name="eol-mode" value="true" checked>
+                        <label for="toric">Edge cells are connected. The left neighbor of the first cell is the last
+                            cell
+                        </label><br>
+                        <input type="radio" id="mirror" name="eol-mode" value="false">
+                        <label for="mirror">Left neighbor of the first cell has the same value as the first cell
+                        </label>
+                        <br>
+                    </div>
+                    <input type="submit" value="Build">
+                </form>
+            </div>
+            <div class="Display">
+                <canvas id="build-canvas" width="500" height="500"></canvas>
+            </div>
+            <div class="automaton-visualizer">
+                <h3>Visualize Automata</h3>
+                <form class="visualizer-form" id="visualizer-form">
+                    <label for="visual-input">Enter a number: </label>
+                    <input id="visual-input" name="num-visual" type="text" placeholder="[1-255]" minlength="1"
+                        maxlength="3">
+                    <input type="submit" value="Visualize">
+                </form>
+                <div class="Visualize">
+                    <canvas id="visual-canvas" width="200" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./bundle.js"></script>
+</body>
+
+</html>
