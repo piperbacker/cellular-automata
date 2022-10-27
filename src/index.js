@@ -8,9 +8,6 @@ const visualForm = document.getElementById("visualizer-form");
 const v_canvas = document.getElementById("visual-canvas");
 const v_ctx = v_canvas.getContext("2d");
 
-let isEmpty = true; // check if b_canvas is empty
-b_ctx.save(); // save empty state
-
 let numGens; // the number of generations (rows)
 let genSize; // the size of each generation (columns)
 
@@ -79,20 +76,14 @@ function generateNextGen(currentGen, n) {
     automata.push(nextGen);
 
     if (n > 0) generateNextGen(nextGen, (n = n - 1));
-    //else displayAutomata(automata)
 }
 
-function displayAutomata(automata, ctx) {
+function displayAutomata(automata, canvas, ctx) {
     let x = 0;
     let y = 0;
+    let w = 20;
+    let h = 20;
 
-    // clear canvas
-    /*if (!isEmpty) {
-        ctx.restore() // restore empty state
-        ctx.save(); // save empty state
-        //ctx.clearRect(0, 0, b_canvas.width, b_canvas.height);
-        isEmpty = true;
-    }*/
 
     for (let i = 0; i < automata.length; i++) {
         let gen = automata[i];
@@ -100,25 +91,22 @@ function displayAutomata(automata, ctx) {
             if (gen[j] === '1') {
                 ctx.fillStyle = "black";
                 ctx.strokeStyle = "black";
-                //b_ctx.scale((1000 / b_canvas.width), (1000 / b_canvas.height))
-                ctx.strokeRect(x, y, 10, 10);
-                ctx.fillRect(x, y, 10, 10);
+                ctx.strokeRect(x, y, w, h);
+                ctx.fillRect(x, y, w, h);
 
             } else {
                 ctx.fillStyle = "white";
                 ctx.strokeStyle = "black";
-                ctx.strokeRect(x, y, 10, 10);
-                ctx.fillRect(x, y, 10, 10);
+                ctx.strokeRect(x, y, w, h);
+                ctx.fillRect(x, y, w, h);
             }
             // move down row
-            x += 12;
+            x += 24;
         }
         // move down column
         x = 0;
-        y += 12;
+        y += 24;
     }
-
-    isEmpty = false;
 }
 
 function rule110(expr) {
@@ -150,18 +138,20 @@ function dec2bin(dec) {
     return (dec >>> 0).toString(2);
 }
 
+function clearCanvas(canvas, ctx) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 buildForm.addEventListener("submit", function (e) {
     e.preventDefault();
+
+    clearCanvas(b_canvas, b_ctx);
 
     // get form data
     const data = new FormData(buildForm);
 
     numGens = data.get("num-gens");
     genSize = data.get("gen-size");
-
-    // set b_canvas size based on user input
-    //b_canvas.height = (numGens*2);
-    //b_canvas.width = (genSize*2);
 
     let val = data.get("init-mode");
     initMode = (val === "true") ? true : false;
@@ -170,12 +160,16 @@ buildForm.addEventListener("submit", function (e) {
     eolMode = (val === "true") ? true : false;
 
     generateInitGen(initMode);
-    displayAutomata(automata, b_ctx);
-    //console.log(isEmpty);
+    displayAutomata(automata, b_canvas, b_ctx);
+
+    // clear automata array
+    automata = [];
 })
 
 visualForm.addEventListener("submit", function (e) {
     e.preventDefault();
+
+    clearCanvas(v_canvas, v_ctx);
 
     // get form data
     const data = new FormData(visualForm);
@@ -183,16 +177,19 @@ visualForm.addEventListener("submit", function (e) {
     val = data.get("num-visual");
 
     let binary = dec2bin(val);
-    console.log(binary);
     numGens = 1;
     genSize = binary.length;
 
     //eolMode = true //toric mode
     eolMode = false //mirror mode
 
-    generateNextGen(binary, 0);
-    displayAutomata(automata, v_ctx);
-    //visualizeAutomaton(automata);
+    // add binary as first gen of cells
+    automata.push(binary);
 
-    console.log(automata);
+    generateNextGen(binary, 0);
+    displayAutomata(automata, v_canvas, v_ctx);
+
+    // clear automata array
+    automata = [];
+
 });
