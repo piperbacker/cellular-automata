@@ -45,7 +45,8 @@ function generateNextGen(currentGen, n) {
 
     // handle generations with only 1 cell
     if (currentGen.length === 1) {
-        return '0';
+        automata.push(['0']);
+        return;
     }
 
     // handle first cell
@@ -79,33 +80,52 @@ function generateNextGen(currentGen, n) {
 }
 
 function displayAutomata(automata, canvas, ctx) {
-    let x = 0;
-    let y = 0;
-    let w = 20;
-    let h = 20;
+    let x = 0, y = 0, w = 0, h = 0;
 
+    if (numGens >= genSize) {
+        w = canvas.width / numGens;
+        h = canvas.width / numGens;
+    } else {
+        w = canvas.width / genSize;
+        h = canvas.width / genSize;
+    }
+
+    // scale for visualize
+    if (ctx === v_ctx) {
+        w = 20;
+        h = 20;
+        ctx.scale(1.6, 1.6);
+    }
 
     for (let i = 0; i < automata.length; i++) {
         let gen = automata[i];
         for (let j = 0; j < gen.length; j++) {
             if (gen[j] === '1') {
+                // add outline for visibility for smaller automata
+                if ((numGens < 100) && (genSize < 100)) {
+                    ctx.strokeStyle = "white";
+                    ctx.strokeRect(x, y, w, h);
+                }
+
                 ctx.fillStyle = "black";
-                ctx.strokeStyle = "black";
-                ctx.strokeRect(x, y, w, h);
                 ctx.fillRect(x, y, w, h);
 
             } else {
+                // add outline for visibility for smaller automata
+                if ((numGens < 100) && (genSize < 100)) {
+                    ctx.strokeStyle = "black";
+                    ctx.strokeRect(x, y, w, h);
+                }
+
                 ctx.fillStyle = "white";
-                ctx.strokeStyle = "black";
-                ctx.strokeRect(x, y, w, h);
                 ctx.fillRect(x, y, w, h);
             }
             // move down row
-            x += 24;
+            x += w;
         }
         // move down column
         x = 0;
-        y += 24;
+        y += h;
     }
 }
 
@@ -139,7 +159,9 @@ function dec2bin(dec) {
 }
 
 function clearCanvas(canvas, ctx) {
+    // clear canvas & reset scale
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
 }
 
 buildForm.addEventListener("submit", function (e) {
@@ -191,5 +213,4 @@ visualForm.addEventListener("submit", function (e) {
 
     // clear automata array
     automata = [];
-
 });

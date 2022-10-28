@@ -48,15 +48,21 @@
                 <canvas id="build-canvas" width="600" height="600"></canvas>
             </div>
             <div class="automaton-visualizer">
-                <h3>Visualize Automata</h3>
-                <form class="visualizer-form" id="visualizer-form">
-                    <label for="visual-input">Enter a number: </label>
-                    <input id="visual-input" name="num-visual" type="text" placeholder="[1-255]" minlength="1"
-                        maxlength="3">
-                    <input type="submit" value="Visualize">
-                </form>
+                <div class="build-visualizer">
+                    <h3>Visualize Automata</h3>
+                    <form class="visualizer-form" id="visualizer-form">
+                        <label for="visual-input">Enter a number: </label>
+                        <input id="visual-input" name="num-visual" type="text" placeholder="[1-255]" minlength="1"
+                            maxlength="3">
+                        <input type="submit" value="Visualize">
+                    </form>
+                </div>
+                <div class="visual-labels">
+                    <p>Initial Generation</p>
+                    <p>Next Generation</p>
+                </div>
                 <div class="Visualize">
-                    <canvas id="visual-canvas" width="200" height="200"></canvas>
+                    <canvas id="visual-canvas" width="350" height="100"></canvas>
                 </div>
             </div>
         </div>
