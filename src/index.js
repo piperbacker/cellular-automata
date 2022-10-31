@@ -1,18 +1,17 @@
 import "./style.css"
 
 const buildForm = document.getElementById("build-form");
-const b_canvas = document.getElementById("build-canvas");
-const b_ctx = b_canvas.getContext("2d");
+const canvas = document.getElementById("build-canvas");
+const ctx = canvas.getContext("2d");
 
-const visualForm = document.getElementById("visualizer-form");
-const v_canvas = document.getElementById("visual-canvas");
-const v_ctx = v_canvas.getContext("2d");
-
-let numGens; // the number of generations (rows)
-let genSize; // the size of each generation (columns)
+let numGens; // number of generations (rows)
+let genSize; // size of each generation (columns)
 
 let initMode; // T: only first cell in row has state=1, F: random
 let eolMode;   // T: Toric mode, F: Mirror mode
+
+const keys = ['111', '110', '101', '100', '011', '010', '001', '000'];
+const rule = new Map();
 
 let automata = [];  // array to store generation arrays
 
@@ -20,6 +19,12 @@ let val;    // to store value to visualize automata
 
 function generateInitGen(initMode) {
     let initGen = [];
+
+    /*for (let i = 0; i < genSize; i++) {
+        initGen.push('0');
+    }
+
+    initGen[genSize / 2] = '1';*/
 
     if (initMode) {
         initGen.push('1');
@@ -55,13 +60,13 @@ function generateNextGen(currentGen, n) {
     // Mirror mode
     else expr = currentGen[i] + currentGen[i] + currentGen[i + 1];
 
-    state = rule110(expr);
+    state = checkRule(expr);
     nextGen.push(state);
 
     // continue until last cell
     for (i = 1; i < genSize - 1; i++) {
         expr = currentGen[i - 1] + currentGen[i] + currentGen[i + 1];
-        state = rule110(expr);
+        state = checkRule(expr);
         nextGen.push(state);
     }
 
@@ -71,7 +76,7 @@ function generateNextGen(currentGen, n) {
     // Mirror mode
     else expr = currentGen[i - 1] + currentGen[i] + currentGen[i];
 
-    state = rule110(expr);
+    state = checkRule(expr);
     nextGen.push(state);
 
     automata.push(nextGen);
@@ -79,7 +84,7 @@ function generateNextGen(currentGen, n) {
     if (n > 0) generateNextGen(nextGen, (n = n - 1));
 }
 
-function displayAutomata(automata, canvas, ctx) {
+function displayAutomata(automata) {
     let x = 0, y = 0, w = 0, h = 0;
 
     if (numGens >= genSize) {
@@ -88,13 +93,6 @@ function displayAutomata(automata, canvas, ctx) {
     } else {
         w = canvas.width / genSize;
         h = canvas.width / genSize;
-    }
-
-    // scale for visualize
-    if (ctx === v_ctx) {
-        w = 20;
-        h = 20;
-        ctx.scale(1.6, 1.6);
     }
 
     for (let i = 0; i < automata.length; i++) {
@@ -129,25 +127,19 @@ function displayAutomata(automata, canvas, ctx) {
     }
 }
 
-function rule110(expr) {
-    switch (expr) {
-        case '001':
-            return '1';
-        case '010':
-            return '1';
-        case '011':
-            return '1';
-        case '100':
-            return '0';
-        case '101':
-            return '1';
-        case '110':
-            return '1';
-        case '111':
-            return '0';
-        default:
-            return '0';
+function setRule(ruleVal) {
+    let rBin = dec2bin(ruleVal); // convert rule value to binary
+    rBin = rBin.padStart(8, '0');    // pad binary with 0's
+    let binArray = Array.from(String(rBin), String);  // convert to array
+
+    for (let i = 0; i < binArray.length; i++) {
+        rule.set(keys[i], binArray[i]);
     }
+}
+
+function checkRule(exp) {
+    let state = rule.get(exp);
+    return state;
 }
 
 function getRandomInt(max) {
@@ -158,7 +150,7 @@ function dec2bin(dec) {
     return (dec >>> 0).toString(2);
 }
 
-function clearCanvas(canvas, ctx) {
+function clearCanvas() {
     // clear canvas & reset scale
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -167,11 +159,12 @@ function clearCanvas(canvas, ctx) {
 buildForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    clearCanvas(b_canvas, b_ctx);
+    clearCanvas();
 
     // get form data
     const data = new FormData(buildForm);
 
+    let ruleVal = data.get("num-rule");
     numGens = data.get("num-gens");
     genSize = data.get("gen-size");
 
@@ -181,36 +174,10 @@ buildForm.addEventListener("submit", function (e) {
     val = data.get("eol-mode");
     eolMode = (val === "true") ? true : false;
 
+    setRule(ruleVal);
     generateInitGen(initMode);
-    displayAutomata(automata, b_canvas, b_ctx);
+    displayAutomata(automata, canvas, ctx);
 
     // clear automata array
     automata = [];
 })
-
-visualForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    clearCanvas(v_canvas, v_ctx);
-
-    // get form data
-    const data = new FormData(visualForm);
-
-    val = data.get("num-visual");
-
-    let binary = dec2bin(val);
-    numGens = 1;
-    genSize = binary.length;
-
-    //eolMode = true //toric mode
-    eolMode = false //mirror mode
-
-    // add binary as first gen of cells
-    automata.push(binary);
-
-    generateNextGen(binary, 0);
-    displayAutomata(automata, v_canvas, v_ctx);
-
-    // clear automata array
-    automata = [];
-});

@@ -1,7 +1,16 @@
 .Header {
     margin: 1%;
-    color: red;
+    color: #fb0763;
     outline: 5px solid black;
+}
+
+.Body{
+    background-color: #d8dfd8;
+}
+
+.part-1{
+    outline: 5px solid black;
+    margin: 1%; 
 }
 
 .Build {
@@ -11,15 +20,12 @@
     margin: 1%;
     padding-left: 1%;
     outline: 5px solid black;
+    background-color: white;
 }
-
-.build-automata-form {}
 
 .select-cols-rows {
     margin: 10px;
 }
-
-.init-mode-radio {}
 
 .Display {
     display: inline-block;
@@ -30,6 +36,7 @@
     padding: 1%;
     position: relative;
     outline: 5px solid black;
+    background-color: white
 }
 
 #build-canvas {
@@ -43,29 +50,6 @@
     outline: 1px solid black;
 }
 
-.automaton-visualizer {
-    margin: 1%;
-    padding-left: 1%;
-    outline: 5px solid black;
-
-}
-
 .build-visualizer {
     vertical-align: top;
-}
-
-.visual-labels {
-    display: inline-block;
-    padding-top: .5%;
-}
-
-.Visualize {
-    vertical-align: top;
-    display: inline-block;
-    position: relative;
-    padding: 1%;
-}
-
-#visual-canvas {
-    outline: 1px solid black;
 }
