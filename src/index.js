@@ -1,4 +1,5 @@
 import "./style.css"
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const buildForm = document.getElementById("build-form");
 const canvas = document.getElementById("build-canvas");
@@ -95,6 +96,9 @@ function displayAutomata(automata) {
         h = canvas.width / genSize;
     }
 
+    x = ((canvas.width / 2) - ((w * genSize) / 2));
+    y = ((canvas.height / 2) - ((h * numGens)) / 2);
+
     for (let i = 0; i < automata.length; i++) {
         let gen = automata[i];
         for (let j = 0; j < gen.length; j++) {
@@ -122,7 +126,8 @@ function displayAutomata(automata) {
             x += w;
         }
         // move down column
-        x = 0;
+        //x = 0;
+        x = ((canvas.width / 2) - ((w * genSize) / 2));
         y += h;
     }
 }
@@ -159,25 +164,27 @@ function clearCanvas() {
 buildForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    clearCanvas();
+    if (canvas.getContext) {
+        clearCanvas();
 
-    // get form data
-    const data = new FormData(buildForm);
+        // get form data
+        const data = new FormData(buildForm);
 
-    let ruleVal = data.get("num-rule");
-    numGens = data.get("num-gens");
-    genSize = data.get("gen-size");
+        let ruleVal = data.get("num-rule");
+        numGens = data.get("num-gens");
+        genSize = data.get("gen-size");
 
-    let val = data.get("init-mode");
-    initMode = (val === "true") ? true : false;
+        let val = data.get("init-mode");
+        initMode = (val === "true") ? true : false;
 
-    val = data.get("eol-mode");
-    eolMode = (val === "true") ? true : false;
+        val = data.get("eol-mode");
+        eolMode = (val === "true") ? true : false;
 
-    setRule(ruleVal);
-    generateInitGen(initMode);
-    displayAutomata(automata, canvas, ctx);
+        setRule(ruleVal);
+        generateInitGen(initMode);
+        displayAutomata(automata, canvas, ctx);
 
-    // clear automata array
-    automata = [];
+        // clear automata array
+        automata = [];
+    }
 })

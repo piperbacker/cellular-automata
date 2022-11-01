@@ -1,19 +1,14 @@
-.Header {
+body{
+    background-color: #d8dfd8;
+}
+
+.title {
     margin: 1%;
     color: #fb0763;
     outline: 5px solid black;
 }
 
-.Body{
-    background-color: #d8dfd8;
-}
-
-.part-1{
-    outline: 5px solid black;
-    margin: 1%; 
-}
-
-.Build {
+.build-automata{
     display: inline-block;
     vertical-align: top;
     width: 20%;
@@ -23,11 +18,22 @@
     background-color: white;
 }
 
-.select-cols-rows {
-    margin: 10px;
+.build-automata-form {
+    padding: 1%;
 }
 
-.Display {
+.select-rule-cols-rows {
+}
+
+.init-mode-radio{
+
+}
+
+.eol-mode-radio{
+
+}
+
+.display-automata {
     display: inline-block;
     vertical-align: top;
     height: 600px;
@@ -39,7 +45,7 @@
     background-color: white
 }
 
-#build-canvas {
+#canvas {
     margin: auto;
     display: block;
     position: absolute;
@@ -50,6 +56,3 @@
     outline: 1px solid black;
 }
 
-.build-visualizer {
-    vertical-align: top;
-}

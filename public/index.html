@@ -2,59 +2,59 @@
 <html>
 
 <head>
-    <title>Local Solver</title>
+    <title>Cellular Automata</title>
 </head>
 
 <body>
-    <div>
-        <div class="Header">
+    <div class="cell-automata">
+        <div class="title">
             <h1>Cellular Automata</h1>
         </div>
-        <div class="Body">
-            <div class="part-1">
-                <div class="Build">
-                    <form class="build-automata-form" id="build-form">
-                        <h2>Build Automata</h2>
-                        <div>
-                            <label for="visual-input">Enter a number: </label>
-                            <input id="visual-input" name="num-rule" type="text" placeholder="[1-255]" minlength="1"
-                                maxlength="3">
-                        </div>
-                        <div class="select-cols-rows">
-                            <label for="num-gens-input">Number of Generations (rows): </label>
-                            <input id="num-gens-input" name="num-gens" type="text" placeholder="[1-255]" minlength="1"
-                                maxlength="3">
-                            <br>
-                            <label for="gen-size-input">Size of each Generation (columns): </label>
-                            <input id="gen-size-input" name="gen-size" type="text" placeholder="[3-255]" minlength="1"
-                                maxlength="3">
-                        </div>
-                        <h3>Intialize Generation</h3>
-                        <div class="init-mode-radio">
-                            <input type="radio" id="first-state" name="init-mode" value="true" checked>
-                            <label for="first-state">First cell in generation has ON state</label><br>
-                            <input type="radio" id="random-state" name="init-mode" value="false">
-                            <label for="random-state">Each cell in generation has random state</label><br>
-                        </div>
-                        <h3>Manage Line Edges</h3>
-                        <div class="eol-mode-radio">
-                            <input type="radio" id="toric" name="eol-mode" value="true" checked>
-                            <label for="toric">Edge cells are connected. The left neighbor of the first cell is the last
-                                cell
-                            </label><br>
-                            <input type="radio" id="mirror" name="eol-mode" value="false">
-                            <label for="mirror">Left neighbor of the first cell has the same value as the first cell
-                            </label>
-                            <br>
-                        </div>
-                        <input type="submit" value="Build">
-                    </form>
+        <!-- BUILD AUTOMATA: get user input for automata params to build & display -->
+        <div class="build-automata">
+            <h2>Build Automata</h2>
+            <form class="build-automata-form" id="build-form">
+                <!-- user enter rule num, num generations, generation size -->
+                <div class="select-rule-cols-rows">
+                    <label for="visual-input">Enter a number: </label>
+                    <input id="visual-input" name="num-rule" type="text" placeholder="[1-255]" minlength="1"
+                        maxlength="3">
+                    <br><br>
+                    <label for="num-gens-input">Number of Generations (rows): </label>
+                    <input id="num-gens-input" name="num-gens" type="text" placeholder="[1-255]" minlength="1"
+                        maxlength="3">
+                    <br>
+                    <label for="gen-size-input">Size of each Generation (columns): </label>
+                    <input id="gen-size-input" name="gen-size" type="text" placeholder="[3-255]" minlength="1"
+                        maxlength="3">
                 </div>
-                <div class="Display">
-                    <canvas id="build-canvas" width="600" height="600"></canvas>
+                <h3>Intialize Generation</h3>
+                <div class="init-mode-radio">
+                    <input type="radio" id="first-state" name="init-mode" value="true" checked>
+                    <label for="first-state">First cell in generation has ON state</label><br>
+                    <input type="radio" id="random-state" name="init-mode" value="false">
+                    <label for="random-state">Each cell in generation has random state</label><br>
                 </div>
-            </div>
+                <h3>Manage Line Edges</h3>
+                <div class="eol-mode-radio">
+                    <input type="radio" id="toric" name="eol-mode" value="true" checked>
+                    <label for="toric">Edge cells are connected. The left neighbor of the first cell is the last
+                        cell
+                    </label><br>
+                    <input type="radio" id="mirror" name="eol-mode" value="false">
+                    <label for="mirror">Left neighbor of the first cell has the same value as the first cell
+                    </label>
+                    <br>
+                </div>
+                <input type="submit" value="Build">
+            </form>
         </div>
+        <!-- DISPLAY AUTOMATA: use canvas to display automata built based on user input -->
+        <div class="display-automata">
+            <canvas id="canvas" width="600" height="600"></canvas>
+            <img src="" alt="">
+        </div>
+    </div>
     </div>
     <script src="./bundle.js"></script>
 </body>
