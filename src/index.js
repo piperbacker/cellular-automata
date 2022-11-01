@@ -2,7 +2,7 @@ import "./style.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const buildForm = document.getElementById("build-form");
-const canvas = document.getElementById("build-canvas");
+const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 let numGens; // number of generations (rows)
@@ -15,8 +15,6 @@ const keys = ['111', '110', '101', '100', '011', '010', '001', '000'];
 const rule = new Map();
 
 let automata = [];  // array to store generation arrays
-
-let val;    // to store value to visualize automata
 
 function generateInitGen(initMode) {
     let initGen = [];

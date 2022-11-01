@@ -1,21 +1,23 @@
-body{
-    background-color: #d8dfd8;
+body {
+    background: #d0cfcf !important;
 }
 
 .title {
     margin: 1%;
+    padding-left: 1%;
     color: #fb0763;
-    outline: 5px solid black;
+    font-family: Garamond, serif;
 }
 
-.build-automata{
+.build-automata {
     display: inline-block;
     vertical-align: top;
     width: 20%;
-    margin: 1%;
+    margin-left: 1%;
+    padding: 1%;
     padding-left: 1%;
-    outline: 5px solid black;
     background-color: white;
+    border-radius: 20px;
 }
 
 .build-automata-form {
@@ -23,25 +25,36 @@ body{
 }
 
 .select-rule-cols-rows {
+    margin-bottom: 10%;
 }
 
-.init-mode-radio{
-
+.init-mode-radio {
+    margin-left: 1%;
+    margin-bottom: 10%;
+    vertical-align: middle;
+    display: inline-block;
 }
 
-.eol-mode-radio{
+.init-mode-radio label{
+    margin-left: 1%;
+    margin-bottom: 10%;
+    vertical-align: middle;
+    display: inline-block;
+}
 
+.eol-mode-radio {
+    margin-left: 1%;
+    margin-bottom: 10%;
 }
 
 .display-automata {
     display: inline-block;
     vertical-align: top;
-    height: 600px;
-    width: 72%;
-    margin: 1%;
-    padding: 1%;
+    height: 750px;
+    width: 75%;
+    margin-left: 1%;
+    margin-bottom: 1%;
     position: relative;
-    outline: 5px solid black;
     background-color: white
 }
 
@@ -53,6 +66,22 @@ body{
     bottom: 0;
     left: 0;
     right: 0;
-    outline: 1px solid black;
 }
+
+#form-submit-btn {
+    background-color: #fb0763;
+    border: none;
+    font-size: 20px;
+    width: 95%;
+    text-align: center;
+}
+
+#form-submit-btn:hover {
+    background-color: black;
+}
+
+h4 {
+    font-size: 20px !important;
+}
+
 
