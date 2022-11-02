@@ -1,23 +1,28 @@
 body {
     background: #d0cfcf !important;
+    color: black;
 }
 
 .title {
-    margin: 1%;
-    padding-left: 1%;
+    padding: 10px 0px 0px 2%;
+    margin-bottom: 3%;
+    background-color: #1c1c1c;
     color: #fb0763;
-    font-family: Garamond, serif;
 }
 
 .build-automata {
     display: inline-block;
     vertical-align: top;
-    width: 20%;
-    margin-left: 1%;
+    width: 25%;
+    margin-left: 6%;
     padding: 1%;
     padding-left: 1%;
     background-color: white;
     border-radius: 20px;
+}
+
+#build-title {
+    color: #fb0763;
 }
 
 .build-automata-form {
@@ -25,21 +30,16 @@ body {
 }
 
 .select-rule-cols-rows {
-    margin-bottom: 10%;
+    margin-bottom: 5%;
+}
+
+label {
+    padding-right: 10px;
 }
 
 .init-mode-radio {
     margin-left: 1%;
     margin-bottom: 10%;
-    vertical-align: middle;
-    display: inline-block;
-}
-
-.init-mode-radio label{
-    margin-left: 1%;
-    margin-bottom: 10%;
-    vertical-align: middle;
-    display: inline-block;
 }
 
 .eol-mode-radio {
@@ -47,21 +47,27 @@ body {
     margin-bottom: 10%;
 }
 
+#eol-exp {
+    font-size: 13px;
+    color: #3e443e;
+}
+
 .display-automata {
     display: inline-block;
     vertical-align: top;
-    height: 750px;
-    width: 75%;
-    margin-left: 1%;
-    margin-bottom: 1%;
+    height: 650px;
+    width: 60%;
     position: relative;
-    background-color: white
+    margin-left: 3%;
+    margin-bottom: 1%;
+    background-color: white;
 }
 
 #canvas {
     margin: auto;
     display: block;
     position: absolute;
+    background-color: white;
     top: 0;
     bottom: 0;
     left: 0;
@@ -77,11 +83,19 @@ body {
 }
 
 #form-submit-btn:hover {
-    background-color: black;
+    background-color: #1c1c1c;
+}
+
+#loading-msg {
+    display: table;
+    margin: 0 auto;
+    display: none;
+}
+
+h3 {
+    font-size: 25px !important;
 }
 
 h4 {
     font-size: 20px !important;
 }
-
-

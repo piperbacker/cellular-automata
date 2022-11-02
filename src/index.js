@@ -3,7 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const buildForm = document.getElementById("build-form");
 const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+//const ctx = canvas.getContext("2d");
+
+const loading_msg = document.getElementById("loading-msg");
 
 let numGens; // number of generations (rows)
 let genSize; // size of each generation (columns)
@@ -11,19 +13,14 @@ let genSize; // size of each generation (columns)
 let initMode; // T: only first cell in row has state=1, F: random
 let eolMode;   // T: Toric mode, F: Mirror mode
 
-const keys = ['111', '110', '101', '100', '011', '010', '001', '000'];
-const rule = new Map();
+const keys = ['111', '110', '101', '100', '011', '010', '001', '000'];  // to hold binary keys
+const rule = new Map(); // to hold key/state pairs based on rule
 
 let automata = [];  // array to store generation arrays
 
+/* Purpose: Generate initial row of automaton cells based on initialization mode and rule */
 function generateInitGen(initMode) {
     let initGen = [];
-
-    /*for (let i = 0; i < genSize; i++) {
-        initGen.push('0');
-    }
-
-    initGen[genSize / 2] = '1';*/
 
     if (initMode) {
         initGen.push('1');
@@ -41,8 +38,10 @@ function generateInitGen(initMode) {
     generateNextGen(initGen, (numGens - 2));
 }
 
+/* Purpose: Recursive function to generate following generation of automaton cells 
+    based on previous generation, line end mode, and rule */
 function generateNextGen(currentGen, n) {
-    let nextGen = [];
+    let nextGen = [];   // store next generation of automaton cells
     let state = '0';
     let expr;
     let i = 0;
@@ -83,9 +82,11 @@ function generateNextGen(currentGen, n) {
     if (n > 0) generateNextGen(nextGen, (n = n - 1));
 }
 
+/* Purpose: Display the final automata results using the canvas */
 function displayAutomata(automata) {
     let x = 0, y = 0, w = 0, h = 0;
 
+    // set width and height of cells based on number of generations or generation size
     if (numGens >= genSize) {
         w = canvas.width / numGens;
         h = canvas.width / numGens;
@@ -94,9 +95,11 @@ function displayAutomata(automata) {
         h = canvas.width / genSize;
     }
 
+    // calculate x,y starting points so that automata is centered on canvas
     x = ((canvas.width / 2) - ((w * genSize) / 2));
     y = ((canvas.height / 2) - ((h * numGens)) / 2);
 
+    // draw rectangle for each cell in automata
     for (let i = 0; i < automata.length; i++) {
         let gen = automata[i];
         for (let j = 0; j < gen.length; j++) {
@@ -130,29 +133,35 @@ function displayAutomata(automata) {
     }
 }
 
+/* Purpose: Set map using rule binary value and keys array */
 function setRule(ruleVal) {
     let rBin = dec2bin(ruleVal); // convert rule value to binary
     rBin = rBin.padStart(8, '0');    // pad binary with 0's
     let binArray = Array.from(String(rBin), String);  // convert to array
 
+    // build rule map
     for (let i = 0; i < binArray.length; i++) {
         rule.set(keys[i], binArray[i]);
     }
 }
 
+/* Purpose: Given a 3 digit binary expression, set state based on rule */
 function checkRule(exp) {
     let state = rule.get(exp);
     return state;
 }
 
+/* Purpose: Generate random integer within max range */
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+/* Purpose: Given a decimal value, convert it to a binary string */
 function dec2bin(dec) {
     return (dec >>> 0).toString(2);
 }
 
+/* Purpose: Clear the canvas */
 function clearCanvas() {
     // clear canvas & reset scale
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -182,7 +191,11 @@ buildForm.addEventListener("submit", function (e) {
         generateInitGen(initMode);
         displayAutomata(automata, canvas, ctx);
 
+        //setTimeout(displayAutomata(automata, canvas, ctx), 2000);
+
         // clear automata array
         automata = [];
     }
 })
+
+

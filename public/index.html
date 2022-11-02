@@ -12,44 +12,46 @@
         </div>
         <!-- BUILD AUTOMATA: get user input for automata params to build & display -->
         <div class="build-automata">
-            <h3>Build Automata</h3>
-            <form class="build-automata-form" id="build-form">
+            <h3 id="build-title">Build Automata</h3>
+            <form class="build-automata-form" id="build-form" autocomplete="off">
                 <!-- user enter rule num, num generations, generation size -->
                 <div class="select-rule-cols-rows">
-                    <label for="visual-input">Choose a rule [1-255]</label>
-                    <input id="visual-input" name="num-rule" type="text" placeholder="110" minlength="1" maxlength="3">
+                    <label for="rule-input">Rule [1-255]</label>
+                    <input id="rule-input" name="num-rule" type="number" value="110" placeholder="110" minlength="1"
+                        maxlength="3" min="1" max="255" required>
                     <br> <br>
                     <label for="gen-size-input">Generation Size</label>
-                    <input id="gen-size-input" name="gen-size" type="text" placeholder="50" minlength="1" maxlength="3">
+                    <input id="gen-size-input" name="gen-size" type="number" placeholder="50" minlength="1"
+                        maxlength="3" min="2" max="999" required>
                     <br> <br>
                     <label for="num-gens-input">Number of Generations</label>
-                    <input id="num-gens-input" name="num-gens" type="text" placeholder="70" minlength="1" maxlength="3">
+                    <input id="num-gens-input" name="num-gens" type="number" placeholder="70" minlength="1"
+                        maxlength="3" min="2" max="999" required>
                 </div>
                 <h4>Initial Generation</h4>
                 <div class="init-mode-radio">
-                    <input type="radio" id="first-state" name="init-mode" value="true" checked>
-                    <label for="first-state">First cell in generation has ON state</label><br>
-                    <input type="radio" id="random-state" name="init-mode" value="false">
-                    <label for="random-state">Each cell in generation has random state</label><br>
+                    <label><input type="radio" id="first-state" name="init-mode" value="true" checked>Only first cell is
+                        ON</label>
+                    <label><input type="radio" id="random-state" name="init-mode" value="false">Randomize ON/OFF cell
+                        state</label>
                 </div>
                 <h4>Line Edges</h4>
                 <div class="eol-mode-radio">
-                    <input type="radio" id="toric" name="eol-mode" value="true" checked>
-                    <label for="toric">Edge cells are connected. The left neighbor of the first cell is the last
-                        cell
-                    </label><br>
-                    <input type="radio" id="mirror" name="eol-mode" value="false">
-                    <label for="mirror">Left neighbor of the first cell has the same value as the first cell
+                    <label><input type="radio" id="toric" name="eol-mode" value="true" checked>
+                        Toric Mode
                     </label>
-                    <br>
+                    <p id="eol-exp">Edge cells are connected. The left neighbor of the first cell is the last cell.</p>
+                    <label><input type="radio" id="mirror" name="eol-mode" value="false">
+                        Mirror Mode
+                    </label>
+                    <p id="eol-exp">The left neighbor of the first cell has the same value as the first cell.</p>
                 </div>
                 <input type="submit" class="btn btn-primary" id="form-submit-btn" value="Build">
             </form>
         </div>
-        <!-- DISPLAY AUTOMATA: use canvas to display automata built based on user input -->
+        <!-- DISPLAY AUTOMATA: use canvas to display automata based on user input -->
         <div class="display-automata">
-            <canvas id="canvas" width="650" height="650"></canvas>
-            <img src="" alt="">
+            <canvas id="canvas" width="600" height="600"></canvas>
         </div>
     </div>
     </div>
