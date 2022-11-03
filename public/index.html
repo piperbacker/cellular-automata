@@ -9,6 +9,7 @@
     <div class="cell-automata">
         <div class="title">
             <h1>Cellular Automata</h1>
+            <p id="subtitle">build & visualize elementary cellular automaton</p>
         </div>
         <!-- BUILD AUTOMATA: get user input for automata params to build & display -->
         <div class="build-automata">
@@ -19,40 +20,49 @@
                     <label for="rule-input">Rule [1-255]</label>
                     <input id="rule-input" name="num-rule" type="number" value="110" placeholder="110" minlength="1"
                         maxlength="3" min="1" max="255" required>
-                    <br> <br>
+                    <br>
+                    <p class="exp">Suggestions: 30, 62, 90, 150</p>
                     <label for="gen-size-input">Generation Size</label>
                     <input id="gen-size-input" name="gen-size" type="number" placeholder="50" minlength="1"
                         maxlength="3" min="2" max="999" required>
-                    <br> <br>
+                    <p class="exp">The number of rows in the automaton.</p>
                     <label for="num-gens-input">Number of Generations</label>
                     <input id="num-gens-input" name="num-gens" type="number" placeholder="70" minlength="1"
                         maxlength="3" min="2" max="999" required>
+                    <p class="exp">The number of columns in the automaton.</p>
                 </div>
+                <!-- user select initial generation mode -->
                 <h4>Initial Generation</h4>
                 <div class="init-mode-radio">
                     <label><input type="radio" id="first-state" name="init-mode" value="true" checked>Only first cell is
                         ON</label>
+                    <p></p>
                     <label><input type="radio" id="random-state" name="init-mode" value="false">Randomize ON/OFF cell
                         state</label>
                 </div>
+                <!-- user select line edges managment mode -->
                 <h4>Line Edges</h4>
                 <div class="eol-mode-radio">
                     <label><input type="radio" id="toric" name="eol-mode" value="true" checked>
                         Toric Mode
                     </label>
-                    <p id="eol-exp">Edge cells are connected. The left neighbor of the first cell is the last cell.</p>
+                    <p class="exp">Edge cells are connected. The left neighbor of the first cell is the last cell.
+                    </p>
                     <label><input type="radio" id="mirror" name="eol-mode" value="false">
                         Mirror Mode
                     </label>
-                    <p id="eol-exp">The left neighbor of the first cell has the same value as the first cell.</p>
+                    <p class="exp">The left neighbor of the first cell has the same value as the first cell.</p>
                 </div>
                 <input type="submit" class="btn btn-primary" id="form-submit-btn" value="Build">
             </form>
         </div>
         <!-- DISPLAY AUTOMATA: use canvas to display automata based on user input -->
-        <div class="display-automata">
+        <div class="display-automata" id="display-automata">
+            <h3 id="sprt-msg">Canvas is not supported on your current browser. Please update to a newer browser to use
+                this site.</h3>
             <canvas id="canvas" width="600" height="600"></canvas>
-        </div>
+        </div><br>
+        <a id="footer" href="https://github.com/piperbacker">Piper Backer 2022</a>
     </div>
     </div>
     <script src="./bundle.js"></script>

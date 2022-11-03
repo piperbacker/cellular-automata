@@ -7,7 +7,14 @@ body {
     padding: 10px 0px 0px 2%;
     margin-bottom: 3%;
     background-color: #1c1c1c;
-    color: #fb0763;
+    color: #d0cfcf;
+    display: flex;
+    align-items: end;
+}
+
+#subtitle{
+    font-size: 18px;
+    margin-bottom: 10px;
 }
 
 .build-automata {
@@ -47,7 +54,11 @@ label {
     margin-bottom: 10%;
 }
 
-#eol-exp {
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+.exp {
     font-size: 13px;
     color: #3e443e;
 }
@@ -86,10 +97,14 @@ label {
     background-color: #1c1c1c;
 }
 
-#loading-msg {
-    display: table;
-    margin: 0 auto;
+#sprt-msg{
     display: none;
+    padding: 30px;
+}
+
+h1 {
+    color: #fb0763;
+    padding-right: 1%;
 }
 
 h3 {
@@ -98,4 +113,10 @@ h3 {
 
 h4 {
     font-size: 20px !important;
+}
+
+#footer{
+    color:#3e443e;
+    float: right;
+    padding: 0px 20px 10px 10px;
 }

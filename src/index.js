@@ -3,9 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const buildForm = document.getElementById("build-form");
 const canvas = document.getElementById("canvas");
-//const ctx = canvas.getContext("2d");
-
-const loading_msg = document.getElementById("loading-msg");
 
 let numGens; // number of generations (rows)
 let genSize; // size of each generation (columns)
@@ -46,12 +43,6 @@ function generateNextGen(currentGen, n) {
     let expr;
     let i = 0;
 
-    // handle generations with only 1 cell
-    if (currentGen.length === 1) {
-        automata.push(['0']);
-        return;
-    }
-
     // handle first cell
     //Toric mode
     if (eolMode) expr = currentGen[genSize - 1] + currentGen[i] + currentGen[i + 1];
@@ -83,7 +74,7 @@ function generateNextGen(currentGen, n) {
 }
 
 /* Purpose: Display the final automata results using the canvas */
-function displayAutomata(automata) {
+function displayAutomata(automata, canvas, context) {
     let x = 0, y = 0, w = 0, h = 0;
 
     // set width and height of cells based on number of generations or generation size
@@ -106,22 +97,22 @@ function displayAutomata(automata) {
             if (gen[j] === '1') {
                 // add outline for visibility for smaller automata
                 if ((numGens < 100) && (genSize < 100)) {
-                    ctx.strokeStyle = "white";
-                    ctx.strokeRect(x, y, w, h);
+                    context.strokeStyle = "white";
+                    context.strokeRect(x, y, w, h);
                 }
 
-                ctx.fillStyle = "black";
-                ctx.fillRect(x, y, w, h);
+                context.fillStyle = "black";
+                context.fillRect(x, y, w, h);
 
             } else {
                 // add outline for visibility for smaller automata
                 if ((numGens < 100) && (genSize < 100)) {
-                    ctx.strokeStyle = "black";
-                    ctx.strokeRect(x, y, w, h);
+                    context.strokeStyle = "black";
+                    context.strokeRect(x, y, w, h);
                 }
 
-                ctx.fillStyle = "white";
-                ctx.fillRect(x, y, w, h);
+                context.fillStyle = "white";
+                context.fillRect(x, y, w, h);
             }
             // move down row
             x += w;
@@ -162,17 +153,22 @@ function dec2bin(dec) {
 }
 
 /* Purpose: Clear the canvas */
-function clearCanvas() {
+function clearCanvas(context) {
     // clear canvas & reset scale
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.setTransform(1, 0, 0, 1, 0, 0);
 }
 
 buildForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    if (canvas.getContext) {
-        clearCanvas();
+    // Check browser supports Canvas
+    let canvasSupported = !!window.HTMLCanvasElement;
+
+    if (canvasSupported) {
+        const ctx = canvas.getContext("2d");
+
+        clearCanvas(ctx);
 
         // get form data
         const data = new FormData(buildForm);
@@ -191,10 +187,10 @@ buildForm.addEventListener("submit", function (e) {
         generateInitGen(initMode);
         displayAutomata(automata, canvas, ctx);
 
-        //setTimeout(displayAutomata(automata, canvas, ctx), 2000);
-
         // clear automata array
         automata = [];
+    } else {
+        document.getElementById("sprt-msg").style.display = "block";
     }
 })
 
